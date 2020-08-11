@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="score"
+            type="com.epicdima.sfct.core.model.PassingScore" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
+
+        <TextView
+            android:id="@+id/year_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:padding="4dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="32dp"
+            android:text='@{score.year + " год"}'
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2019 год" />
+
+        <TextView
+            android:id="@+id/fulltime_title_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="@string/fulltime"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="15sp"
+            android:visibility="@{(score.fullTimeBudget == -1 &amp;&amp; score.fullTimePaid == -1) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/year_textview"
+            app:layout_constraintEnd_toStartOf="@+id/parttime_title_textview"
+            app:layout_constraintStart_toEndOf="@+id/year_textview"
+            app:layout_constraintTop_toTopOf="@+id/year_textview"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/parttime_title_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="@string/parttime"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="15sp"
+            android:visibility="@{(score.partTimeBudget == -1 &amp;&amp; score.partTimePaid == -1) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/year_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fulltime_title_textview"
+            app:layout_constraintTop_toTopOf="@+id/year_textview"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/budget_title_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:padding="4dp"
+            android:text="@string/budget"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="15sp"
+            android:visibility="@{(score.fullTimeBudget == -1 &amp;&amp; score.partTimeBudget == -1) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="@+id/year_textview"
+            app:layout_constraintStart_toStartOf="@+id/year_textview"
+            app:layout_constraintTop_toBottomOf="@+id/year_textview" />
+
+        <TextView
+            android:id="@+id/paid_title_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:padding="4dp"
+            android:text="@string/paid"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="15sp"
+            android:visibility="@{(score.fullTimePaid == -1 &amp;&amp; score.partTimePaid == -1) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/year_textview"
+            app:layout_constraintStart_toStartOf="@+id/year_textview"
+            app:layout_constraintTop_toBottomOf="@+id/budget_title_textview" />
+
+        <TextView
+            android:id="@+id/fulltime_budget_score_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="@{String.valueOf(score.fullTimeBudget)}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="15sp"
+            android:visibility="@{score.fullTimeBudget == -1 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/budget_title_textview"
+            app:layout_constraintEnd_toEndOf="@+id/fulltime_title_textview"
+            app:layout_constraintStart_toStartOf="@+id/fulltime_title_textview"
+            app:layout_constraintTop_toTopOf="@+id/budget_title_textview"
+            tools:text="100" />
+
+        <TextView
+            android:id="@+id/parttime_budget_score_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="@{String.valueOf(score.partTimeBudget)}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="15sp"
+            android:visibility="@{score.partTimeBudget == -1 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/budget_title_textview"
+            app:layout_constraintEnd_toEndOf="@+id/parttime_title_textview"
+            app:layout_constraintStart_toStartOf="@+id/parttime_title_textview"
+            app:layout_constraintTop_toTopOf="@+id/budget_title_textview"
+            tools:text="200" />
+
+        <TextView
+            android:id="@+id/fulltime_paid_score_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="@{String.valueOf(score.fullTimePaid)}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="15sp"
+            android:visibility="@{score.fullTimePaid == -1 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/paid_title_textview"
+            app:layout_constraintEnd_toEndOf="@+id/fulltime_title_textview"
+            app:layout_constraintStart_toStartOf="@+id/fulltime_title_textview"
+            app:layout_constraintTop_toTopOf="@+id/paid_title_textview"
+            tools:text="300" />
+
+        <TextView
+            android:id="@+id/parttime_paid_score_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:text="@{String.valueOf(score.partTimePaid)}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="15sp"
+            android:visibility="@{score.partTimePaid == -1 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/paid_title_textview"
+            app:layout_constraintEnd_toEndOf="@+id/parttime_title_textview"
+            app:layout_constraintStart_toStartOf="@+id/parttime_title_textview"
+            app:layout_constraintTop_toTopOf="@+id/paid_title_textview"
+            tools:text="400" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

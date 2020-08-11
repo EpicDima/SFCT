@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/exsearchFragment">
+
+    <fragment
+        android:id="@+id/exsearchFragment"
+        android:name="com.epicdima.sfct.exsearch.ExsearchFragment"
+        android:label="exsearch_fragment"
+        tools:layout="@layout/exsearch_fragment">
+        <action
+            android:id="@+id/action_exsearchFragment_to_specialtyFragment"
+            app:destination="@id/specialtyFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_exsearchFragment_to_parametersFragment"
+            app:destination="@id/parametersFragment" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="www.kudapostupat.by/exsearch" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/specialtyFragment"
+        android:name="com.epicdima.sfct.information.specialty.SpecialtyFragment"
+        android:label="specialty_fragment"
+        tools:layout="@layout/specialty_fragment">
+        <action
+            android:id="@+id/action_specialtyFragment_to_institutionFragment"
+            app:destination="@id/institutionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="specialtyId"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="www.kudapostupat.by/zavdata/id/{specialtyId}" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/institutionFragment"
+        android:name="com.epicdima.sfct.information.institution.InstitutionFragment"
+        android:label="institution_fragment"
+        tools:layout="@layout/institution_fragment">
+        <argument
+            android:name="institutionId"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_institutionFragment_to_specialtyFragment"
+            app:destination="@id/specialtyFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="www.kudapostupat.by/zavedenie/id/{institutionId}" />
+    </fragment>
+    <fragment
+        android:id="@+id/parametersFragment"
+        android:name="com.epicdima.sfct.exsearch.ParametersFragment"
+        android:label="ParametersFragment" />
+</navigation>

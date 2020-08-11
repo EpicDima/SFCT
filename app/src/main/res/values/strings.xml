@@ -1,0 +1,132 @@
+<resources>
+    <string name="app_name">SFCT</string>
+
+    <!--    Parameter title-->
+    <string name="exam_title">Вступительные испытания</string>
+    <string name="exam_empty">Не выбраны</string>
+    <!--    Parameter values-->
+    <string name="exam_russian_belarusian_language">Русский/Белорусский язык</string>
+    <string name="exam_history_of_belarus">История Беларуси</string>
+    <string name="exam_global_history">Всемирная история (нов. время)</string>
+    <string name="exam_geography">География</string>
+    <string name="exam_mathematics">Математика</string>
+    <string name="exam_physics">Физика</string>
+    <string name="exam_social_science">Обществоведение</string>
+    <string name="exam_foreign_language">Иностранный язык</string>
+    <string name="exam_chemistry">Химия</string>
+    <string name="exam_biology">Биология</string>
+    <string name="exam_creativity">Творчество</string>
+    <string name="exam_specialty">Специальность</string>
+    <string name="exam_russian_belarusian_literature">Русская/Белорусская литература</string>
+    <string name="exam_interview">Собеседование</string>
+    <string name="exam_completition_documents">Конкурс документов</string>
+    <string name="exam_physical_training">Физическая подготовка</string>
+
+    <!--    Parameter title-->
+    <string name="region_title">Регион</string>
+    <!--    Parameter values-->
+    <string name="region_all">Любой</string>
+    <string name="region_minsk">Минск</string>
+    <string name="region_brest_region">Брестская область</string>
+    <string name="region_vitebsk_region">Витебская область</string>
+    <string name="region_gomel_region">Гомельская область</string>
+    <string name="region_grodno_region">Гродненская область</string>
+    <string name="region_minsk_region">Минская область</string>
+    <string name="region_mogilev_region">Могилёвская область</string>
+
+    <!--    Parameter title-->
+    <string name="teach_form_title">Форма обучения</string>
+    <!--    Parameter values-->
+    <string name="teachform_unspecified">Любая</string>
+    <string name="teachform_fulltime">Дневная</string>
+    <string name="teachform_parttime">Заочная</string>
+
+    <!--    Parameter title-->
+    <string name="type_of_institution_title">Тип учебного заведения</string>
+    <!--    Parameter values-->
+    <string name="typeofinstitution_all">ВУЗ/ССУЗ</string>
+    <string name="typeofinstitution_university">ВУЗ</string>
+    <string name="typeofinstitution_college">ССУЗ</string>
+
+    <!--    Parameter title-->
+    <string name="payment_form_title">Форма оплаты</string>
+    <!--    Parameter values-->
+    <string name="paymentform_unspecified">Неважно</string>
+    <string name="paymentform_budget">Бюджет</string>
+    <string name="paymentform_paid">Платно</string>
+
+    <!--    Parameter title-->
+    <string name="range_of_points_title">Диапазон проходного балла</string>
+    <!--    Parameter values-->
+    <string name="rangeofpoints_unspecified">Не указан</string>
+    <string name="rangeofpoints_no_completition">Конкурса не было</string>
+    <string name="rangeofpoints_up_to_nine">До 90</string>
+    <string name="rangeofpoints_between_91_and_100">91 – 100</string>
+    <string name="rangeofpoints_between_101_and_125">101 – 125</string>
+    <string name="rangeofpoints_between_126_and_150">126 – 150</string>
+    <string name="rangeofpoints_between_151_and_175">151 – 175</string>
+    <string name="rangeofpoints_between_176_and_200">176 – 200</string>
+    <string name="rangeofpoints_between_201_and_225">201 – 225</string>
+    <string name="rangeofpoints_between_226_and_250">226 – 250</string>
+    <string name="rangeofpoints_between_251_and_275">251 – 275</string>
+    <string name="rangeofpoints_between_276_and_300">276 – 300</string>
+    <string name="rangeofpoints_between_301_and_325">301 – 325</string>
+    <string name="rangeofpoints_between_326_and_350">326 – 350</string>
+    <string name="rangeofpoints_between_351_and_375">351 – 375</string>
+    <string name="rangeofpoints_between_376_and_400">376 – 400</string>
+
+    <!--    Parameter title-->
+    <string name="points_title">Сумма баллов</string>
+    <string name="points_input_info">Введите вашу сумму баллов</string>
+    <string name="points_input_error">Сумма баллов должна быть в диапазоне от 0 до 400 включительно</string>
+    <!--    Parameter values-->
+    <string name="points_unspecified">Не указана</string>
+
+    <!--    Parameter title-->
+    <string name="dormitory_title">Предоставление общежития</string>
+    <!--    Parameter values-->
+    <string name="dormitory_unspecified">Неважно</string>
+    <string name="dormitory_yes">Да, всем студентам</string>
+    <string name="dormitory_not_all">Не всем, в соответствии с внутренними правилами</string>
+    <string name="dormitory_no">Не предоставляется</string>
+
+    <string name="reset">Сбросить</string>
+    <string name="parameters_title">Параметры</string>
+    <string name="exsearch_title">SFCT Поиск</string>
+    <string name="search">Поиск</string>
+    <string name="search_parameters">Параметры поиска</string>
+    <string name="no_results">Нет результатов по данному запросу</string>
+    <string name="qualification">Квалификация</string>
+    <string name="periof_of_study">Срок обучения</string>
+    <string name="teach_form">Форма обучения</string>
+    <string name="payment_form">Форма оплаты</string>
+    <string name="reception_plan">План набора</string>
+    <string name="notes">Примечания</string>
+    <string name="exams">Вступительные испытания</string>
+    <string name="first_profile_exam">1-е профильное испытание</string>
+    <string name="second_profile_exam">2-е профильное испытание</string>
+    <string name="address">Адрес</string>
+    <string name="email">Email</string>
+    <string name="site">Сайт</string>
+    <string name="place_in_dormitory">Место в общежитии</string>
+    <string name="error_message">Непредвиденная ошибка</string>
+    <string name="specialty_title">Специальность</string>
+    <string name="institution_title">Учебное заведение</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="no_dormitory_info">Нет данных о местах в общежитии</string>
+    <string name="read_more">Читать дальше</string>
+    <string name="roll_up">Свернуть</string>
+    <string name="specialties">Специальности</string>
+    <string name="contact_info">Контактная информация</string>
+    <string name="short_info">Краткая информация</string>
+    <string name="paid">Платно</string>
+    <string name="budget">Бюджет</string>
+    <string name="parttime">Заочная форма</string>
+    <string name="fulltime">Дневная форма</string>
+    <string name="passing_scores">Проходные баллы</string>
+    <string name="open_in_browser">Открыть в браузере</string>
+    <string name="network_error_message">Не удалось загрузить данные из-за проблем с сетью</string>
+    <string name="please_choose_exams">Пожалуйста, выберите вступительные испытания</string>
+    <string name="ok">OK</string>
+
+</resources>

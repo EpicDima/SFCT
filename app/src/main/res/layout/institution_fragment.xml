@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.epicdima.sfct.R" />
+
+        <variable
+            name="status"
+            type="androidx.lifecycle.LiveData&lt;com.epicdima.sfct.utils.Status>" />
+
+        <variable
+            name="loadingDormitory"
+            type="androidx.lifecycle.LiveData&lt;Boolean>" />
+
+        <variable
+            name="institution"
+            type="com.epicdima.sfct.core.model.Institution" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background">
+
+        <include
+            layout="@layout/status_layout"
+            app:status="@{status}" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical"
+                android:visibility="@{status.isAnyTrue() ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/foreground"
+                    android:elevation="1dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@{institution.name}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="19sp"
+                        tools:text="УО 'Белорусская государственная академия искусств'" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/foreground"
+                    android:elevation="1dp"
+                    android:orientation="vertical"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/contact_into_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@string/contact_info"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/darkDivider" />
+
+                    <include
+                        layout="@layout/parameter_info"
+                        android:visibility="@{institution.address.length() == 0 ? View.GONE : View.VISIBLE}"
+                        app:info="@{institution.address}"
+                        app:title="@{@string/address}" />
+
+                    <include
+                        layout="@layout/parameter_info"
+                        android:visibility="@{institution.phone.length() == 0 ? View.GONE : View.VISIBLE}"
+                        app:info="@{institution.phone}"
+                        app:title="@{context.getResources().getQuantityString(R.plurals.phone_number, (institution.phone.indexOf(',') == -1 &amp;&amp; institution.phone.indexOf(';') == -1) ? 1 : 2)}" />
+
+                    <include
+                        layout="@layout/parameter_info"
+                        android:visibility="@{institution.email.length() == 0 ? View.GONE : View.VISIBLE}"
+                        app:info="@{institution.email}"
+                        app:title="@{@string/email}" />
+
+                    <include
+                        android:id="@+id/site_layout"
+                        layout="@layout/parameter_info"
+                        android:visibility="@{institution.site.length() == 0 ? View.GONE : View.VISIBLE}"
+                        app:info="@{institution.site}"
+                        app:title="@{@string/site}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/dormitory_info_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/foreground"
+                    android:elevation="1dp"
+                    android:orientation="vertical"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/dormitory_info_title_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@string/place_in_dormitory"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/darkDivider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:visibility="@{loadingDormitory ? View.GONE : View.VISIBLE}">
+
+                        <TextView
+                            android:id="@+id/dormitory_info_textview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="5"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textSize="15sp"
+                            tools:text="KHgkjcgkjhk hjkahkdhhk hjkah jkhajkh jkah jkhajkdh jkhadskjh dkajhsdkjhjkshkjdhkasjhk jkhjk hjkhkdHgkjcgkgkajhk hjkah jkhajkh jkah jkhajkdh jkhadskjh dkajhsdkjhjkshkjdhkasjhk jkhjk hjkhkdHgkjcgkgkajhk hjkah jkhajkh jkah jkhajkdh jkhadskjh dkajhsdkjhjkshkjdhkasjhk jkhjk hjkhkdHgkjcgkgkajhk hjkah jkhajkh jkah jkhajkdh jkhadskjh dkajhsdkjhjkshkjdhkasjhk jkhjk hjkhkdHgkjcgkgkajhk hjkah jkhajkh jkah jkhajkdh jkhadskjh dkajhsdkjhjkshkjdhkasjhk jkhjk hjkhkdHgkjcgkgkajhk hjkah jkhajkh jkah jkhajkdh jkhadskjh dkajhsdkjhjkshkjdhkasjhk jkhjk hjkhkdHgkjcgkgkajhk hjkah jkhajkh jkah jkhajkdh jkhadskjh dkajhsdkjhjkshkjdhkasjhk jkhjk hjkhkdHgkjcgkgkajhk hjkah jkhajkh jkah jkhajkdh jkhadskjh dkajhsdkjhjkshkjdhkasjhk jkhjk hjkhkdHgkjcgkgkajhk hjkah jkhajkh jkah jkhajkdh jkhadskjh dkajhsdkjhjkshkjdhkasjhk jkhjk hjkhkdHgkjcgkgkajhk hjkah jkhajkh jkah jkhajkdh jkhadskjh dkajhsdkjhjkshkjdhkasjhk jkhjk hjkhkdHgkjcgkgkajhk hjkah jkhajkh jkah jkhajkdh jkhadskjh dkajhsdkjhjkshkjdhkasjhk jkhjk hjkhkdHgkjcgkgkajhk hjkah jkhajkh jkah jkhajkdh jkhadskjh dkajhsdkjhjkshkjdhkasjhk jkhjk hjkhkdHgkjcgkgkajhk hjkah jkhajkh jkah jkhajkdh jkhadskjh dkajhsdkjhjkshkjdhkasjhk jkhjk hjkhkdj hajkdhj" />
+
+                        <TextView
+                            android:id="@+id/read_more_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:text="@string/read_more"
+                            android:textSize="16sp"
+                            android:theme="@style/TextButtonStyle"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp"
+                        android:visibility="@{loadingDormitory ? View.VISIBLE : View.GONE}"
+                        tools:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/specialties_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:background="@color/foreground"
+                    android:elevation="1dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/specialties_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@string/specialties"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="17sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/darkDivider" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/specialties_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        tools:listitem="@layout/item_specialty" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selectable"
+        android:paddingStart="8dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="12dp">
+
+        <TextView
+            android:id="@+id/specialty_name_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="16sp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="4dp"
+            tools:text="Филиал ГОУВПО 'Российский государственный социальный университет' в г. Минске Республики Беларусь" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

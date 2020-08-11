@@ -1,0 +1,17 @@
+apply plugin: "kotlin"
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jsoup:jsoup:1.13.1"
+    implementation "javax.inject:javax.inject:1"
+
+    testImplementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    testImplementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
+}
+
+sourceSets {
+    main.kotlin.srcDirs += "src/main/kotlin"
+}

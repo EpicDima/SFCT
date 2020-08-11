@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#FFFFFF</color>
+
+    <color name="colorPrimary">#DC143C</color>
+    <color name="colorPrimaryDark">#B80707</color>
+    <color name="colorAccent">#DF123B</color>
+
+    <color name="linkColor">#0070C5</color>
+
+    <color name="grayColor">#919191</color>
+    <color name="controlNormal">#717171</color>
+
+    <color name="darkDivider">#E5E5E5</color>
+    <color name="lightDivider">#F1F1F1</color>
+
+    <color name="background">#F8F8F8</color>
+    <color name="foreground">#FFFFFF</color>
+    <color name="buttonTransparentBackground">#00000000</color>
+
+    <color name="cursorColor">#000000</color>
+
+</resources>

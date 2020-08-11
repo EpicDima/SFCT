@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.epicdima.sfct.exsearch.ParametersFragment.ParameterViewItem" />
+
+        <variable
+            name="exams"
+            type="ParameterViewItem" />
+
+        <variable
+            name="region"
+            type="ParameterViewItem" />
+
+        <variable
+            name="teach_form"
+            type="ParameterViewItem" />
+
+        <variable
+            name="type_of_institution"
+            type="ParameterViewItem" />
+
+        <variable
+            name="payment_form"
+            type="ParameterViewItem" />
+
+        <variable
+            name="range_of_points"
+            type="ParameterViewItem" />
+
+        <variable
+            name="points"
+            type="ParameterViewItem" />
+
+        <variable
+            name="dormitory"
+            type="ParameterViewItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lightDivider">
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="1dp"
+                android:orientation="vertical"
+                android:paddingBottom="100dp">
+
+                <include
+                    android:id="@+id/exams_layout"
+                    layout="@layout/parameters_section"
+                    app:parameter="@{exams}" />
+
+                <include
+                    android:id="@+id/region_layout"
+                    layout="@layout/parameters_section"
+                    app:parameter="@{region}" />
+
+                <include
+                    android:id="@+id/teach_form_layout"
+                    layout="@layout/parameters_section"
+                    app:parameter="@{teach_form}" />
+
+                <include
+                    android:id="@+id/type_of_institution_layout"
+                    layout="@layout/parameters_section"
+                    app:parameter="@{type_of_institution}" />
+
+                <include
+                    android:id="@+id/payment_form_layout"
+                    layout="@layout/parameters_section"
+                    app:parameter="@{payment_form}" />
+
+                <include
+                    android:id="@+id/range_of_points_layout"
+                    layout="@layout/parameters_section"
+                    app:parameter="@{range_of_points}" />
+
+                <include
+                    android:id="@+id/points_layout"
+                    layout="@layout/parameters_section"
+                    app:parameter="@{points}" />
+
+                <include
+                    android:id="@+id/dormitory_layout"
+                    layout="@layout/parameters_section"
+                    app:parameter="@{dormitory}" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:padding="12dp"
+            android:paddingStart="100dp"
+            android:paddingEnd="100dp"
+            android:text="@string/search"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

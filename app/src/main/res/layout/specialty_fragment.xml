@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="status"
+            type="androidx.lifecycle.LiveData&lt;com.epicdima.sfct.utils.Status>" />
+
+        <variable
+            name="specialty"
+            type="com.epicdima.sfct.core.model.Specialty" />
+
+        <variable
+            name="institution"
+            type="com.epicdima.sfct.core.model.Institution" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background">
+
+        <include
+            layout="@layout/status_layout"
+            app:status="@{status}" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical"
+                android:visibility="@{status.isAnyTrue() ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/foreground"
+                    android:elevation="1dp"
+                    android:orientation="vertical"
+                    android:paddingTop="8dp">
+
+                    <TextView
+                        android:id="@+id/specialty_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:padding="4dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="@{specialty.name}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="19sp"
+                        tools:text="Технология машиностроения" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/foreground"
+                    android:elevation="1dp"
+                    android:orientation="vertical"
+                    android:paddingTop="8dp">
+
+                    <TextView
+                        android:id="@+id/institution_name_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:text="@{institution.name}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textColor="@color/linkColor"
+                        android:textSize="17sp"
+                        tools:text="УО 'Белорусская государственная академия искусств'" />
+
+                    <TextView
+                        android:id="@+id/faculty_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@{specialty.faculty}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="17sp"
+                        tools:text="Театральный факультет" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/foreground"
+                    android:elevation="1dp"
+                    android:orientation="vertical"
+                    android:paddingBottom="4dp">
+
+                    <TextView
+                        android:id="@+id/short_info_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@string/short_info"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/darkDivider" />
+
+                    <include
+                        layout="@layout/parameter_info"
+                        android:visibility="@{specialty.qualification.length() == 0 ? View.GONE : View.VISIBLE}"
+                        app:info="@{specialty.qualification}"
+                        app:title="@{@string/qualification}" />
+
+                    <include
+                        layout="@layout/parameter_info"
+                        android:visibility="@{specialty.periodOfStudy.length() == 0 ? View.GONE : View.VISIBLE}"
+                        app:info="@{specialty.periodOfStudy}"
+                        app:title="@{@string/periof_of_study}" />
+
+                    <include
+                        layout="@layout/parameter_info"
+                        android:visibility="@{specialty.teachForm.length() == 0 ? View.GONE : View.VISIBLE}"
+                        app:info="@{specialty.teachForm}"
+                        app:title="@{@string/teach_form}" />
+
+                    <include
+                        layout="@layout/parameter_info"
+                        android:visibility="@{specialty.paymentForm.length() == 0 ? View.GONE : View.VISIBLE}"
+                        app:info="@{specialty.paymentForm}"
+                        app:title="@{@string/payment_form}" />
+
+                    <include
+                        layout="@layout/parameter_info"
+                        android:visibility="@{specialty.receptionPlan.length() == 0 ? View.GONE : View.VISIBLE}"
+                        app:info="@{specialty.receptionPlan}"
+                        app:title="@{@string/reception_plan}" />
+
+                    <include
+                        layout="@layout/parameter_info"
+                        android:visibility="@{specialty.notes.length() == 0 ? View.GONE : View.VISIBLE}"
+                        app:info="@{specialty.notes}"
+                        app:title="@{@string/notes}" />
+
+                    <include
+                        layout="@layout/parameter_info"
+                        android:visibility="@{specialty.exams.length() == 0 ? View.GONE : View.VISIBLE}"
+                        app:info="@{specialty.exams}"
+                        app:title="@{@string/exams}" />
+
+                    <include
+                        layout="@layout/parameter_info"
+                        android:visibility="@{specialty.profileExams.first.length() == 0 ? View.GONE : View.VISIBLE}"
+                        app:info="@{specialty.profileExams.first}"
+                        app:title="@{@string/first_profile_exam}" />
+
+                    <include
+                        layout="@layout/parameter_info"
+                        android:visibility="@{specialty.profileExams.second.length() == 0 ? View.GONE : View.VISIBLE}"
+                        app:info="@{specialty.profileExams.second}"
+                        app:title="@{@string/second_profile_exam}" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/scores_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:background="@color/foreground"
+                    android:elevation="1dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/scores_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="@string/passing_scores"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/darkDivider" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/scores_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        tools:listitem="@layout/item_score" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

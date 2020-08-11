@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="phone_number">
+        <item quantity="one">Номер телефона</item>
+        <item quantity="few">Номера телефонов</item>
+    </plurals>
+</resources>
