@@ -10,7 +10,7 @@ import java.io.IOException
  */
 abstract class DownloadableViewModel : ViewModel() {
 
-    private val _status = MutableLiveData<Status>(Status())
+    private val _status = MutableLiveData(Status())
     val status: LiveData<Status> = _status
     val rawStatus: Status
         get() = _status.value!!
