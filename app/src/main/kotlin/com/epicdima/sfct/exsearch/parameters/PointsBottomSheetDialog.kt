@@ -7,11 +7,14 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.epicdima.sfct.R
+import com.epicdima.sfct.databinding.InputBottomSheetBinding
 import com.epicdima.sfct.exsearch.ParametersViewModel
 import com.epicdima.sfct.utils.ExtendedBottomSheetDialog
 import com.epicdima.sfct.utils.hide
@@ -19,32 +22,30 @@ import com.epicdima.sfct.utils.parentViewModel
 import com.epicdima.sfct.utils.show
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.footer_of_bottom_sheet.*
-import kotlinx.android.synthetic.main.input_bottom_sheet.*
 
 /**
  * @author EpicDima
  */
 @AndroidEntryPoint
-class PointsBottomSheetDialog : ExtendedBottomSheetDialog() {
+class PointsBottomSheetDialog : ExtendedBottomSheetDialog<InputBottomSheetBinding>() {
 
     companion object {
-        const val TAG = "PointsBottomSheetDialog"
 
         fun newInstance() = PointsBottomSheetDialog()
     }
 
     private val viewModel: ParametersViewModel by parentViewModel()
 
-    override fun getLayoutId(): Int = R.layout.input_bottom_sheet
+    override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        InputBottomSheetBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        info_error_textview.apply {
+        binding.infoErrorTextview.apply {
             setLines(2)
             text = getString(R.string.points_input_info)
         }
-        input_edittext.apply {
+        binding.inputEdittext.apply {
             inputType = InputType.TYPE_CLASS_NUMBER
             addTextChangedListener(keyboardChangeListener())
             filters = arrayOf(InputFilter.LengthFilter(3))
@@ -67,16 +68,16 @@ class PointsBottomSheetDialog : ExtendedBottomSheetDialog() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                p0?.let { text ->
+                p0?.also { text ->
                     if (text.isNotEmpty()) {
-                        reset_button.show()
+                        binding.footerLayout.resetButton.show()
                         if (text.length > 1) {
                             if (text.all { '0' == it }) {
-                                input_edittext.setText("0")
-                                input_edittext.setSelection(p1)
+                                binding.inputEdittext.setText("0")
+                                binding.inputEdittext.setSelection(p1)
                             } else if (text[0] == '0') {
-                                input_edittext.setText(text.drop(1).toString())
-                                input_edittext.setSelection(p1)
+                                binding.inputEdittext.setText(text.drop(1).toString())
+                                binding.inputEdittext.setSelection(p1)
                             }
                         }
                         if (validateText(text.toString())) {
@@ -85,7 +86,7 @@ class PointsBottomSheetDialog : ExtendedBottomSheetDialog() {
                             showError()
                         }
                     } else {
-                        reset_button.hide()
+                        binding.footerLayout.resetButton.hide()
                     }
                 }
             }
@@ -93,33 +94,42 @@ class PointsBottomSheetDialog : ExtendedBottomSheetDialog() {
     }
 
     private fun showInfo() {
-        info_error_textview.setTextColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.controlNormal
+        binding.apply {
+            infoErrorTextview.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.controlNormal
+                )
             )
-        )
-        info_error_textview.text = getText(R.string.points_input_info)
-        input_edittext.backgroundTintList =
-            ColorStateList.valueOf(ContextCompat.getColor(requireContext(), android.R.color.black))
-        confirm_button.show()
+            infoErrorTextview.text = getText(R.string.points_input_info)
+            inputEdittext.backgroundTintList =
+                ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        android.R.color.black
+                    )
+                )
+            footerLayout.confirmButton.show()
+        }
     }
 
     private fun showError() {
-        info_error_textview.setTextColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.colorPrimaryDark
+        binding.apply {
+            infoErrorTextview.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.colorPrimaryDark
+                )
             )
-        )
-        info_error_textview.text = getText(R.string.points_input_error)
-        input_edittext.backgroundTintList = ColorStateList.valueOf(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.colorPrimaryDark
+            infoErrorTextview.text = getText(R.string.points_input_error)
+            inputEdittext.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.colorPrimaryDark
+                )
             )
-        )
-        confirm_button.hide()
+            footerLayout.confirmButton.hide()
+        }
     }
 
     private fun validateText(text: String): Boolean {
@@ -138,7 +148,7 @@ class PointsBottomSheetDialog : ExtendedBottomSheetDialog() {
     }
 
     override fun onResetButtonClick() {
-        input_edittext.text?.clear()
+        binding.inputEdittext.text?.clear()
         showInfo()
     }
 
@@ -147,10 +157,9 @@ class PointsBottomSheetDialog : ExtendedBottomSheetDialog() {
     }
 
     override fun onCancel(dialog: DialogInterface) {
-        if (validateText(input_edittext.text.toString())) {
-            viewModel.points.currentValue.value = input_edittext.text.toString()
+        if (validateText(binding.inputEdittext.text.toString())) {
+            viewModel.points.currentValue.value = binding.inputEdittext.text.toString()
         }
         super.onCancel(dialog)
     }
-
 }

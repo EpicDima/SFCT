@@ -12,10 +12,8 @@ import javax.inject.Singleton
 @Suppress("UNCHECKED_CAST")
 @Singleton
 class ViewModelFactory @Inject constructor(
-    private val viewModelsMap: Map<Class<out ViewModel>,
-            @JvmSuppressWildcards Provider<ViewModel>>
-) :
-    ViewModelProvider.NewInstanceFactory() {
+    private val viewModelsMap: Map<Class<out ViewModel>, Provider<ViewModel>>
+) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val creator = viewModelsMap[modelClass] ?: viewModelsMap.asIterable().firstOrNull {

@@ -9,6 +9,7 @@ import org.jsoup.nodes.Element
  * @author EpicDima
  */
 internal class ExsearchParser : HtmlParser<List<Institution>> {
+
     override fun parse(html: String) = Jsoup.parse(html)
         ?.selectFirst("div.catalog")
         ?.select("div.catalog_item")

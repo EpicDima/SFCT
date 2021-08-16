@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/header_of_bottom_sheet" />
+    <include
+        android:id="@+id/header_layout"
+        layout="@layout/header_of_bottom_sheet" />
 
     <View
         android:layout_width="match_parent"
@@ -23,6 +25,8 @@
         android:layout_height="1dp"
         android:background="@color/darkDivider" />
 
-    <include layout="@layout/footer_of_bottom_sheet" />
+    <include
+        android:id="@+id/footer_layout"
+        layout="@layout/footer_of_bottom_sheet" />
 
 </LinearLayout>

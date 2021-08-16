@@ -7,6 +7,7 @@ import retrofit2.http.*
  * @author EpicDima
  */
 interface RetrofitApiService : ApiService {
+
     companion object {
         const val BASE_URL = "https://kudapostupat.by"
     }

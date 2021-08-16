@@ -4,16 +4,17 @@ import com.epicdima.sfct.exsearch.ParametersStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.scopes.ActivityScoped
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 /**
  * @author EpicDima
  */
-@InstallIn(ActivityComponent::class)
+@InstallIn(SingletonComponent::class)
 @Module
-object ActivityModule {
-    @ActivityScoped
+object ParametersStorageModule {
+
+    @Singleton
     @Provides
     fun provideParametersStorage() = ParametersStorage()
 }

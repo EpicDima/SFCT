@@ -7,6 +7,7 @@ import com.epicdima.sfct.core.usecases.ExsearchParams
  * @author EpicDima
  */
 class ParametersStorage {
+
     companion object {
         val DEFAULT_PARAMS = ExsearchParams()
     }

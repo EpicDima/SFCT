@@ -10,6 +10,7 @@ import org.jsoup.nodes.TextNode
  * @author EpicDima
  */
 internal class InstitutionParser : HtmlParser<Institution> {
+
     override fun parse(html: String): Institution {
         val content = Jsoup.parse(html).selectFirst("div.content_wrap > .content")
         val heading = content.selectFirst(".heading") ?: return Institution()

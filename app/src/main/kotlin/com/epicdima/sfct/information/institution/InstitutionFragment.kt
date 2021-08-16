@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DiffUtil
@@ -23,15 +22,13 @@ import com.epicdima.sfct.network.RetrofitApiService
 import com.epicdima.sfct.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
-
 /**
  * @author EpicDima
  */
 @AndroidEntryPoint
-class InstitutionFragment : Fragment(R.layout.institution_fragment) {
+class InstitutionFragment : Fragment() {
 
     companion object {
-        const val TAG = "InstitutionFragment"
 
         fun newInstance() = InstitutionFragment()
     }
@@ -52,13 +49,13 @@ class InstitutionFragment : Fragment(R.layout.institution_fragment) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = InstitutionFragmentBinding.inflate(inflater)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         configureCommons()
         createAdapter()
         setObservers()
@@ -66,17 +63,20 @@ class InstitutionFragment : Fragment(R.layout.institution_fragment) {
     }
 
     private fun configureCommons() {
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.status = viewModel.status
-        binding.loadingDormitory = viewModel.loadingDormitory
-        binding.siteLayout.infoTextview.apply {
-            setTextIsSelectable(false)
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.linkColor))
-        }
         requireAppCompatActivity().supportActionBar?.apply {
             title = getText(R.string.institution_title)
         }
         showBackButton()
+
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            status = viewModel.status
+            loadingDormitory = viewModel.loadingDormitory
+            siteLayout.infoTextview.apply {
+                setTextIsSelectable(false)
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.linkColor))
+            }
+        }
     }
 
     private fun createAdapter() {
@@ -92,7 +92,7 @@ class InstitutionFragment : Fragment(R.layout.institution_fragment) {
 
     private fun setObservers() {
         viewModel.institution.observe(viewLifecycleOwner) { institution ->
-            institution?.let { onInstitutionDownload(it) }
+            institution?.also { onInstitutionDownload(it) }
         }
         viewModel.dormitory.observe(viewLifecycleOwner) { dormitory ->
             if (dormitory.isNullOrEmpty()) {
@@ -104,11 +104,13 @@ class InstitutionFragment : Fragment(R.layout.institution_fragment) {
     }
 
     private fun onInstitutionDownload(institution: Institution) {
-        binding.institution = institution
-        val clickListener = {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(institution.site)))
+        binding.apply {
+            this.institution = institution
+            siteLayout.root.setOnClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(institution.site)))
+            }
         }
-        binding.siteLayout.root.setOnClickListener { clickListener() }
+
         if (institution.specialties.isEmpty()) {
             binding.specialtiesLayout.gone()
         } else {
@@ -117,29 +119,35 @@ class InstitutionFragment : Fragment(R.layout.institution_fragment) {
     }
 
     private fun onDormitoryDownload(dormitory: String) {
-        binding.dormitoryInfoTextview.text = dormitory
-        binding.dormitoryInfoTextview.onPreDraw()
-        if (binding.dormitoryInfoTextview.layout.getEllipsisCount(binding.dormitoryInfoTextview.lineCount - 1) != 0) {
-            binding.dormitoryInfoLayout.setOnClickListener { showMoreClickListener() }
-            binding.readMoreButton.show()
+        binding.apply {
+            dormitoryInfoTextview.text = dormitory
+            dormitoryInfoTextview.onPreDraw()
+            if (dormitoryInfoTextview.layout.getEllipsisCount(dormitoryInfoTextview.lineCount - 1) != 0) {
+                dormitoryInfoLayout.setOnClickListener { showMoreClickListener() }
+                readMoreButton.show()
+            }
         }
     }
 
     private fun showLessClickListener() {
-        binding.readMoreButton.text = getText(R.string.read_more)
-        binding.dormitoryInfoTextview.maxLines = 5
-        binding.readMoreButton.setOnClickListener { showMoreClickListener() }
-        binding.dormitoryInfoLayout.setOnClickListener { showMoreClickListener() }
-        if (binding.scrollView.scrollY > binding.dormitoryInfoLayout.top) {
-            binding.scrollView.scrollTo(0, binding.dormitoryInfoLayout.top)
+        binding.apply {
+            readMoreButton.text = getText(R.string.read_more)
+            dormitoryInfoTextview.maxLines = 5
+            readMoreButton.setOnClickListener { showMoreClickListener() }
+            dormitoryInfoLayout.setOnClickListener { showMoreClickListener() }
+            if (scrollView.scrollY > dormitoryInfoLayout.top) {
+                scrollView.scrollTo(0, dormitoryInfoLayout.top)
+            }
         }
     }
 
     private fun showMoreClickListener() {
-        binding.dormitoryInfoLayout.setOnClickListener(null)
-        binding.dormitoryInfoTextview.maxLines = Int.MAX_VALUE
-        binding.readMoreButton.text = getText(R.string.roll_up)
-        binding.readMoreButton.setOnClickListener { showLessClickListener() }
+        binding.apply {
+            dormitoryInfoLayout.setOnClickListener(null)
+            dormitoryInfoTextview.maxLines = Int.MAX_VALUE
+            readMoreButton.text = getText(R.string.roll_up)
+            readMoreButton.setOnClickListener { showLessClickListener() }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -190,14 +198,14 @@ class InstitutionFragment : Fragment(R.layout.institution_fragment) {
 
 
         private class SpecialtyDiffUtil : DiffUtil.ItemCallback<Specialty>() {
+
             override fun areItemsTheSame(oldItem: Specialty, newItem: Specialty): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(oldItem: Specialty, newItem: Specialty): Boolean {
                 return oldItem == newItem
             }
-
         }
     }
 }

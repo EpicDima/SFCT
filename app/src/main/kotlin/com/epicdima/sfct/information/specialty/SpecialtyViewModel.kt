@@ -1,6 +1,5 @@
 package com.epicdima.sfct.information.specialty
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -9,12 +8,15 @@ import com.epicdima.sfct.core.model.Specialty
 import com.epicdima.sfct.core.network.DataResult
 import com.epicdima.sfct.core.usecases.GetSpecialtyByIdUseCase
 import com.epicdima.sfct.utils.DownloadableViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * @author EpicDima
  */
-class SpecialtyViewModel @ViewModelInject constructor(
+@HiltViewModel
+class SpecialtyViewModel @Inject constructor(
     private val getSpecialtyByIdUseCase: GetSpecialtyByIdUseCase
 ) : DownloadableViewModel() {
 

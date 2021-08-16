@@ -15,14 +15,17 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <nav-graph android:value="@navigation/navigation" />
+
         </activity>
-
     </application>
-
 </manifest>

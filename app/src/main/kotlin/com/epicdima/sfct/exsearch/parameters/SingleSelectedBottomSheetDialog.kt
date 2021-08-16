@@ -2,34 +2,37 @@ package com.epicdima.sfct.exsearch.parameters
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.epicdima.sfct.R
 import com.epicdima.sfct.core.usecases.ExsearchParams
+import com.epicdima.sfct.databinding.ListHeaderBottomSheetBinding
 import com.epicdima.sfct.exsearch.ParametersViewModel
 import com.epicdima.sfct.utils.EnumRadioAdapter
 import com.epicdima.sfct.utils.ExtendedBottomSheetDialog
 import com.epicdima.sfct.utils.parentViewModel
 import com.epicdima.sfct.utils.setStandardProperties
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.list_header_bottom_sheet.*
 
 /**
  * @author EpicDima
  */
-abstract class SingleSelectedBottomSheetDialog<E : Enum<E>> : ExtendedBottomSheetDialog() {
+abstract class SingleSelectedBottomSheetDialog<E : Enum<E>> :
+    ExtendedBottomSheetDialog<ListHeaderBottomSheetBinding>() {
 
     protected val viewModel: ParametersViewModel by parentViewModel()
 
     protected lateinit var adapter: SingleSelectedAdapter
 
-    override fun getLayoutId(): Int = R.layout.list_header_bottom_sheet
+    override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        ListHeaderBottomSheetBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = createAdapter()
         configureAdapter()
-        recycler_view.setStandardProperties(requireContext(), adapter)
+        binding.recyclerView.setStandardProperties(requireContext(), adapter)
     }
 
     override fun onCloseButtonClick() {
@@ -37,6 +40,7 @@ abstract class SingleSelectedBottomSheetDialog<E : Enum<E>> : ExtendedBottomShee
     }
 
     protected abstract fun createAdapter(): SingleSelectedAdapter
+
     protected abstract fun configureAdapter()
 
 
@@ -47,6 +51,7 @@ abstract class SingleSelectedBottomSheetDialog<E : Enum<E>> : ExtendedBottomShee
     ) : EnumRadioAdapter<E, EnumRadioAdapter.EnumViewHolder<E>>(
         context, selectListener, enumClass
     ) {
+
         override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
@@ -56,13 +61,14 @@ abstract class SingleSelectedBottomSheetDialog<E : Enum<E>> : ExtendedBottomShee
     }
 }
 
+
 /**
  * @author EpicDima
  */
 @AndroidEntryPoint
 class RegionBottomSheetDialog : SingleSelectedBottomSheetDialog<ExsearchParams.Region>() {
+
     companion object {
-        const val TAG = "RegionBottomSheetDialog"
 
         fun newInstance() = RegionBottomSheetDialog()
     }
@@ -81,13 +87,14 @@ class RegionBottomSheetDialog : SingleSelectedBottomSheetDialog<ExsearchParams.R
     }
 }
 
+
 /**
  * @author EpicDima
  */
 @AndroidEntryPoint
 class TeachFormBottomSheetDialog : SingleSelectedBottomSheetDialog<ExsearchParams.TeachForm>() {
+
     companion object {
-        const val TAG = "TeachFormBottomSheetDialog"
 
         fun newInstance() = TeachFormBottomSheetDialog()
     }
@@ -106,14 +113,15 @@ class TeachFormBottomSheetDialog : SingleSelectedBottomSheetDialog<ExsearchParam
     }
 }
 
+
 /**
  * @author EpicDima
  */
 @AndroidEntryPoint
 class TypeOfInstitutionBottomSheetDialog :
     SingleSelectedBottomSheetDialog<ExsearchParams.TypeOfInstitution>() {
+
     companion object {
-        const val TAG = "TypeOfInstitutionBottomSheetDialog"
 
         fun newInstance() = TypeOfInstitutionBottomSheetDialog()
     }
@@ -135,13 +143,14 @@ class TypeOfInstitutionBottomSheetDialog :
     }
 }
 
+
 /**
  * @author EpicDima
  */
 @AndroidEntryPoint
 class PaymentFormBottomSheetDialog : SingleSelectedBottomSheetDialog<ExsearchParams.PaymentForm>() {
+
     companion object {
-        const val TAG = "PaymentFormBottomSheetDialog"
 
         fun newInstance() = PaymentFormBottomSheetDialog()
     }
@@ -160,14 +169,15 @@ class PaymentFormBottomSheetDialog : SingleSelectedBottomSheetDialog<ExsearchPar
     }
 }
 
+
 /**
  * @author EpicDima
  */
 @AndroidEntryPoint
 class RangeOfPointsBottomSheetDialog :
     SingleSelectedBottomSheetDialog<ExsearchParams.RangeOfPoints>() {
+
     companion object {
-        const val TAG = "RangeOfPointsBottomSheetDialog"
 
         fun newInstance() = RangeOfPointsBottomSheetDialog()
     }
@@ -186,14 +196,15 @@ class RangeOfPointsBottomSheetDialog :
     }
 }
 
+
 /**
  * @author EpicDima
  */
 @AndroidEntryPoint
 open class DormitoryBottomSheetDialog :
     SingleSelectedBottomSheetDialog<ExsearchParams.Dormitory>() {
+
     companion object {
-        const val TAG = "DormitoryBottomSheetDialog"
 
         fun newInstance() = DormitoryBottomSheetDialog()
     }

@@ -14,12 +14,12 @@ import java.util.*
  * @author EpicDima
  */
 fun <E : Enum<E>> Context.getEnumStrings(enumClass: Class<E>): EnumMap<E, String> {
-    val clsName = enumClass.simpleName.toLowerCase(Locale.ROOT)
+    val clsName = enumClass.simpleName.lowercase(Locale.ROOT)
     return EnumMap(enumClass.enumConstants!!.map {
         Pair(
             it, getString(
                 resources.getIdentifier(
-                    clsName + "_" + it.name.toLowerCase(Locale.ROOT),
+                    clsName + "_" + it.name.lowercase(Locale.ROOT),
                     "string",
                     packageName
                 )
@@ -29,10 +29,10 @@ fun <E : Enum<E>> Context.getEnumStrings(enumClass: Class<E>): EnumMap<E, String
 }
 
 fun <E : Enum<E>> Context.getEnumString(enum: E): String {
-    val clsName = enum.javaClass.simpleName.toLowerCase(Locale.ROOT)
+    val clsName = enum.javaClass.simpleName.lowercase(Locale.ROOT)
     return getString(
         resources.getIdentifier(
-            clsName + "_" + enum.name.toLowerCase(Locale.ROOT),
+            clsName + "_" + enum.name.lowercase(Locale.ROOT),
             "string",
             packageName
         )

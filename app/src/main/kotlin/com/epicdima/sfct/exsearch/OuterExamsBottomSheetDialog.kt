@@ -8,8 +8,8 @@ import com.epicdima.sfct.exsearch.parameters.ExamsBottomSheetDialog
  * @author EpicDima
  */
 class OuterExamsBottomSheetDialog : ExamsBottomSheetDialog() {
+
     companion object {
-        const val TAG = "OuterExamsBottomSheetDialog"
 
         fun newInstance() = OuterExamsBottomSheetDialog()
     }

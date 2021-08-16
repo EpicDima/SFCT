@@ -10,28 +10,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.epicdima.sfct.R
 import com.epicdima.sfct.core.model.Specialty
 import com.epicdima.sfct.databinding.ItemSpecialtyBottomSheetBinding
+import com.epicdima.sfct.databinding.ListHeaderBottomSheetBinding
 import com.epicdima.sfct.utils.ExtendedBottomSheetDialog
 import com.epicdima.sfct.utils.parentViewModel
 import com.epicdima.sfct.utils.setStandardProperties
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.header_of_bottom_sheet.*
-import kotlinx.android.synthetic.main.header_of_bottom_sheet.view.*
-import kotlinx.android.synthetic.main.list_header_bottom_sheet.*
 
 /**
  * @author EpicDima
  */
 @AndroidEntryPoint
 class InstitutionSpecialtiesBottomSheet :
-    ExtendedBottomSheetDialog() {
+    ExtendedBottomSheetDialog<ListHeaderBottomSheetBinding>() {
 
     companion object {
-        const val TAG = "InstitutionSpecialtiesBottomSheet"
 
-        fun newInstance(index: Int): InstitutionSpecialtiesBottomSheet {
-            val fragment = InstitutionSpecialtiesBottomSheet()
-            fragment.index = index
-            return fragment
+        fun newInstance(index: Int) = InstitutionSpecialtiesBottomSheet().apply {
+            this.index = index
         }
     }
 
@@ -39,7 +34,8 @@ class InstitutionSpecialtiesBottomSheet :
 
     private var index = -1
 
-    override fun getLayoutId(): Int = R.layout.list_header_bottom_sheet
+    override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        ListHeaderBottomSheetBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,7 +45,7 @@ class InstitutionSpecialtiesBottomSheet :
             dismiss()
             return
         }
-        header_layout.title_textview.text = viewModel.resultList.value!![index].name
+        binding.headerLayout.titleTextview.text = viewModel.resultList.value!![index].name
         val adapter = SpecialtiesAdapter(viewModel.resultList.value!![index].specialties) { id ->
             Navigation.findNavController(requireParentFragment().requireView())
                 .navigate(
@@ -57,7 +53,7 @@ class InstitutionSpecialtiesBottomSheet :
                     bundleOf("specialtyId" to id)
                 )
         }
-        recycler_view.setStandardProperties(requireContext(), adapter)
+        binding.recyclerView.setStandardProperties(requireContext(), adapter)
     }
 
     override fun onCloseButtonClick() {
@@ -71,12 +67,11 @@ class InstitutionSpecialtiesBottomSheet :
     ) : RecyclerView.Adapter<SpecialtiesAdapter.SpecialtyHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpecialtyHolder {
-            val binding =
-                ItemSpecialtyBottomSheetBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
+            val binding = ItemSpecialtyBottomSheetBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
             return SpecialtyHolder(binding)
         }
 
@@ -89,6 +84,7 @@ class InstitutionSpecialtiesBottomSheet :
         class SpecialtyHolder(
             private val binding: ItemSpecialtyBottomSheetBinding
         ) : RecyclerView.ViewHolder(binding.root) {
+
             fun bind(specialty: Specialty, selectListener: (Int) -> Unit) {
                 binding.value = specialty
                 binding.root.setOnClickListener { selectListener(specialty.id) }

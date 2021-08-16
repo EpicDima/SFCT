@@ -7,7 +7,6 @@ import androidx.databinding.ObservableField
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import com.epicdima.sfct.R
 import com.epicdima.sfct.databinding.ParametersFragmentBinding
@@ -23,8 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class ParametersFragment : Fragment(), SharedViewModelFragment {
+
     companion object {
-        const val TAG = "ParametersFragment"
 
         fun newInstance() = ParametersFragment()
     }
@@ -43,15 +42,21 @@ class ParametersFragment : Fragment(), SharedViewModelFragment {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = ParametersFragmentBinding.inflate(inflater)
         return binding.root
     }
 
     override fun getSharedViewModel(): ViewModel = viewModel
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireAppCompatActivity().supportActionBar?.apply {
+            setHomeAsUpIndicator(R.drawable.close_icon)
+            title = getText(R.string.parameters_title)
+        }
+        showBackButton()
+
         createParameters()
         setObservers()
         setListeners()
@@ -63,19 +68,13 @@ class ParametersFragment : Fragment(), SharedViewModelFragment {
                     getString(R.string.please_choose_exams),
                     Snackbar.LENGTH_SHORT
                 )
-                    .setAction(getString(R.string.ok), {})
+                    .setAction(getString(R.string.ok)) {}
                     .show()
             } else {
                 viewModel.save()
                 Navigation.findNavController(it).popBackStack()
             }
         }
-
-        requireAppCompatActivity().supportActionBar?.apply {
-            setHomeAsUpIndicator(R.drawable.close_icon)
-            title = getText(R.string.parameters_title)
-        }
-        showBackButton()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -98,66 +97,77 @@ class ParametersFragment : Fragment(), SharedViewModelFragment {
     }
 
     private fun createParameters() {
-        binding.exams = ParameterViewItem(getString(R.string.exam_title))
-        binding.region = ParameterViewItem(getString(R.string.region_title))
-        binding.teachForm = ParameterViewItem(getString(R.string.teach_form_title))
-        binding.typeOfInstitution = ParameterViewItem(getString(R.string.type_of_institution_title))
-        binding.paymentForm = ParameterViewItem(getString(R.string.payment_form_title))
-        binding.rangeOfPoints = ParameterViewItem(getString(R.string.range_of_points_title))
-        binding.points = ParameterViewItem(getString(R.string.points_title))
-        binding.dormitory = ParameterViewItem(getString(R.string.dormitory_title))
+        binding.apply {
+            exams = ParameterViewItem(getString(R.string.exam_title))
+            region = ParameterViewItem(getString(R.string.region_title))
+            teachForm = ParameterViewItem(getString(R.string.teach_form_title))
+            typeOfInstitution = ParameterViewItem(getString(R.string.type_of_institution_title))
+            paymentForm = ParameterViewItem(getString(R.string.payment_form_title))
+            rangeOfPoints = ParameterViewItem(getString(R.string.range_of_points_title))
+            points = ParameterViewItem(getString(R.string.points_title))
+            dormitory = ParameterViewItem(getString(R.string.dormitory_title))
+        }
     }
 
     private fun setObservers() {
         setExamsObserver()
-        viewLifecycleOwner.observeParameter(
-            requireContext(),
-            viewModel.exams,
-            binding.exams!!,
-            this::checkDefaultParameters
-        )
-        viewLifecycleOwner.observeParameter(
-            requireContext(),
-            viewModel.region,
-            binding.region!!,
-            this::checkDefaultParameters
-        )
-        viewLifecycleOwner.observeParameter(
-            requireContext(),
-            viewModel.teachForm,
-            binding.teachForm!!,
-            this::checkDefaultParameters
-        )
-        viewLifecycleOwner.observeParameter(
-            requireContext(),
-            viewModel.typeOfInstitution,
-            binding.typeOfInstitution!!,
-            this::checkDefaultParameters
-        )
-        viewLifecycleOwner.observeParameter(
-            requireContext(),
-            viewModel.paymentForm,
-            binding.paymentForm!!,
-            this::checkDefaultParameters
-        )
-        viewLifecycleOwner.observeParameter(
-            requireContext(),
-            viewModel.rangeOfPoints,
-            binding.rangeOfPoints!!,
-            this::checkDefaultParameters
-        )
-        viewLifecycleOwner.observeParameter(
-            requireContext(),
-            viewModel.points,
-            binding.points!!,
-            this::checkDefaultParameters
-        )
-        viewLifecycleOwner.observeParameter(
-            requireContext(),
-            viewModel.dormitory,
-            binding.dormitory!!,
-            this::checkDefaultParameters
-        )
+        viewLifecycleOwner.apply {
+            observeParameter(
+                requireContext(),
+                viewModel.exams,
+                binding.exams!!,
+                this@ParametersFragment::checkDefaultParameters
+            )
+
+            observeParameter(
+                requireContext(),
+                viewModel.region,
+                binding.region!!,
+                this@ParametersFragment::checkDefaultParameters
+            )
+
+            observeParameter(
+                requireContext(),
+                viewModel.teachForm,
+                binding.teachForm!!,
+                this@ParametersFragment::checkDefaultParameters
+            )
+
+            observeParameter(
+                requireContext(),
+                viewModel.typeOfInstitution,
+                binding.typeOfInstitution!!,
+                this@ParametersFragment::checkDefaultParameters
+            )
+
+            observeParameter(
+                requireContext(),
+                viewModel.paymentForm,
+                binding.paymentForm!!,
+                this@ParametersFragment::checkDefaultParameters
+            )
+
+            observeParameter(
+                requireContext(),
+                viewModel.rangeOfPoints,
+                binding.rangeOfPoints!!,
+                this@ParametersFragment::checkDefaultParameters
+            )
+
+            observeParameter(
+                requireContext(),
+                viewModel.points,
+                binding.points!!,
+                this@ParametersFragment::checkDefaultParameters
+            )
+
+            observeParameter(
+                requireContext(),
+                viewModel.dormitory,
+                binding.dormitory!!,
+                this@ParametersFragment::checkDefaultParameters
+            )
+        }
     }
 
     private fun setExamsObserver() {
@@ -168,51 +178,46 @@ class ParametersFragment : Fragment(), SharedViewModelFragment {
                 binding.searchButton.show()
             }
         }
-//        viewModel.exams.currentValue.observe(viewLifecycleOwner) {
-//            checkDefaultParameters()
-//            binding.region!!.apply {
-//                viewModel.exams.apply {
-//                    selected.set(convertToStringOfSelected(requireContext()))
-//                    defaultValue.set(isDefault())
-//                }
-//            }
-//        }
     }
 
     private fun setListeners() {
         bindListener(
             binding.examsLayout, viewModel.exams,
-            ExamsBottomSheetDialog.TAG, (ExamsBottomSheetDialog)::newInstance
+            ExamsBottomSheetDialog::javaClass.name, (ExamsBottomSheetDialog)::newInstance
         )
         bindListener(
             binding.regionLayout, viewModel.region,
-            RegionBottomSheetDialog.TAG, (RegionBottomSheetDialog)::newInstance
+            RegionBottomSheetDialog::javaClass.name, (RegionBottomSheetDialog)::newInstance
         )
         bindListener(
             binding.teachFormLayout, viewModel.teachForm,
-            TeachFormBottomSheetDialog.TAG, (TeachFormBottomSheetDialog)::newInstance
+            TeachFormBottomSheetDialog::javaClass.name, (TeachFormBottomSheetDialog)::newInstance
         )
         bindListener(
             binding.typeOfInstitutionLayout,
             viewModel.typeOfInstitution,
-            TypeOfInstitutionBottomSheetDialog.TAG,
+            TypeOfInstitutionBottomSheetDialog::javaClass.name,
             (TypeOfInstitutionBottomSheetDialog)::newInstance
         )
         bindListener(
-            binding.paymentFormLayout, viewModel.paymentForm,
-            PaymentFormBottomSheetDialog.TAG, (PaymentFormBottomSheetDialog)::newInstance
+            binding.paymentFormLayout,
+            viewModel.paymentForm,
+            PaymentFormBottomSheetDialog::javaClass.name,
+            (PaymentFormBottomSheetDialog)::newInstance
         )
         bindListener(
-            binding.rangeOfPointsLayout, viewModel.rangeOfPoints,
-            RangeOfPointsBottomSheetDialog.TAG, (RangeOfPointsBottomSheetDialog)::newInstance
+            binding.rangeOfPointsLayout,
+            viewModel.rangeOfPoints,
+            RangeOfPointsBottomSheetDialog::javaClass.name,
+            (RangeOfPointsBottomSheetDialog)::newInstance
         )
         bindListener(
             binding.pointsLayout, viewModel.points,
-            PointsBottomSheetDialog.TAG, (PointsBottomSheetDialog)::newInstance
+            PointsBottomSheetDialog::javaClass.name, (PointsBottomSheetDialog)::newInstance
         )
         bindListener(
             binding.dormitoryLayout, viewModel.dormitory,
-            DormitoryBottomSheetDialog.TAG, (DormitoryBottomSheetDialog)::newInstance
+            DormitoryBottomSheetDialog::javaClass.name, (DormitoryBottomSheetDialog)::newInstance
         )
     }
 

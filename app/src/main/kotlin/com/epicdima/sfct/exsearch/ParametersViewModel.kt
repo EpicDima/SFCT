@@ -1,13 +1,15 @@
 package com.epicdima.sfct.exsearch
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import com.epicdima.sfct.exsearch.parameters.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * @author EpicDima
  */
-class ParametersViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ParametersViewModel @Inject constructor(
     parametersStorage: ParametersStorage
 ) : ViewModel() {
 

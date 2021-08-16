@@ -3,7 +3,6 @@ package com.epicdima.sfct.exsearch.parameters
 import android.content.Context
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.observe
 import com.epicdima.sfct.R
 import com.epicdima.sfct.core.usecases.ExsearchParams
 import com.epicdima.sfct.exsearch.Parameter
@@ -47,6 +46,7 @@ class SingleParameterItem<T>(
 
     fun convertToStringOfSelected(context: Context) = converter(currentValue.value!!, context)
 }
+
 
 fun ParametersStorage.createExamsParameter() = SingleParameterItem(exams) { value, context ->
     if (value.isEmpty()) {

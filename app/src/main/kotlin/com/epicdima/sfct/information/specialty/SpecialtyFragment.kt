@@ -7,7 +7,6 @@ import android.view.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DiffUtil
@@ -27,10 +26,9 @@ import dagger.hilt.android.AndroidEntryPoint
  * @author EpicDima
  */
 @AndroidEntryPoint
-class SpecialtyFragment : Fragment(R.layout.specialty_fragment) {
+class SpecialtyFragment : Fragment() {
 
     companion object {
-        const val TAG = "SpecialtyFragment"
 
         fun newInstance() = SpecialtyFragment()
     }
@@ -51,57 +49,62 @@ class SpecialtyFragment : Fragment(R.layout.specialty_fragment) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = SpecialtyFragmentBinding.inflate(inflater)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         configureCommons()
         setObservers()
         viewModel.downloadSpecialty(args.specialtyId)
     }
 
     private fun configureCommons() {
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.status = viewModel.status
         requireAppCompatActivity().supportActionBar?.apply {
             title = getText(R.string.specialty_title)
         }
         showBackButton()
+
         adapter = ScoresAdapter()
-        binding.scoresRecyclerView.setStandardProperties(requireContext(), adapter)
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            status = viewModel.status
+            scoresRecyclerView.setStandardProperties(requireContext(), adapter)
+        }
     }
 
     private fun setObservers() {
         viewModel.institution.observe(viewLifecycleOwner) { institution ->
-            institution?.let {
-                onInstitutionDownload(it)
-            }
+            institution?.also { onInstitutionDownload(it) }
         }
         viewModel.specialty.observe(viewLifecycleOwner) { specialty ->
-            specialty?.let { onSpecialtyDownload(specialty) }
+            specialty?.also { onSpecialtyDownload(specialty) }
         }
     }
 
     private fun onInstitutionDownload(institution: Institution) {
-        binding.institution = institution
-        binding.institutionNameTextview.setOnClickListener {
-            Navigation.findNavController(it).navigate(
-                R.id.action_specialtyFragment_to_institutionFragment,
-                bundleOf("institutionId" to institution.id)
-            )
+        binding.apply {
+            this.institution = institution
+            institutionNameTextview.setOnClickListener {
+                Navigation.findNavController(it).navigate(
+                    R.id.action_specialtyFragment_to_institutionFragment,
+                    bundleOf("institutionId" to institution.id)
+                )
+            }
         }
     }
 
     private fun onSpecialtyDownload(specialty: Specialty) {
-        binding.specialty = specialty
-        if (specialty.scores.isEmpty()) {
-            binding.scoresLayout.gone()
-        } else {
-            adapter.submitList(specialty.scores)
-            binding.scoresLayout.show()
+        binding.apply {
+            this.specialty = specialty
+            if (specialty.scores.isEmpty()) {
+                scoresLayout.gone()
+            } else {
+                adapter.submitList(specialty.scores)
+                scoresLayout.show()
+            }
         }
     }
 
@@ -148,6 +151,7 @@ class SpecialtyFragment : Fragment(R.layout.specialty_fragment) {
 
 
         private class ScoreDiffUtil : DiffUtil.ItemCallback<PassingScore>() {
+
             override fun areItemsTheSame(oldItem: PassingScore, newItem: PassingScore): Boolean {
                 return oldItem == newItem
             }

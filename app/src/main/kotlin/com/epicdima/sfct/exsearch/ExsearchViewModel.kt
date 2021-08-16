@@ -1,6 +1,5 @@
 package com.epicdima.sfct.exsearch
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,12 +11,15 @@ import com.epicdima.sfct.core.usecases.GetExsearchUseCase
 import com.epicdima.sfct.exsearch.parameters.SingleParameterItem
 import com.epicdima.sfct.exsearch.parameters.createExamsParameter
 import com.epicdima.sfct.utils.DownloadableViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * @author EpicDima
  */
-class ExsearchViewModel @ViewModelInject constructor(
+@HiltViewModel
+class ExsearchViewModel @Inject constructor(
     private val parametersStorage: ParametersStorage,
     private val exsearchUseCase: GetExsearchUseCase
 ) : DownloadableViewModel() {

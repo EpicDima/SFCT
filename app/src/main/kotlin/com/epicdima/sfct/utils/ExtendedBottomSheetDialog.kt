@@ -5,62 +5,89 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.viewbinding.ViewBinding
 import com.epicdima.sfct.R
+import com.epicdima.sfct.databinding.InputBottomSheetBinding
+import com.epicdima.sfct.databinding.ListFooterHeaderBottomSheetBinding
+import com.epicdima.sfct.databinding.ListHeaderBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.footer_of_bottom_sheet.*
-import kotlinx.android.synthetic.main.footer_of_bottom_sheet.view.*
-import kotlinx.android.synthetic.main.header_of_bottom_sheet.*
-import kotlinx.android.synthetic.main.header_of_bottom_sheet.view.*
 
 /**
  * @author EpicDima
  */
-abstract class ExtendedBottomSheetDialog : BottomSheetDialogFragment() {
+abstract class ExtendedBottomSheetDialog<VB : ViewBinding> : BottomSheetDialogFragment() {
+
+    protected lateinit var binding: VB
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(getLayoutId(), container, false)
+        binding = createViewBinding(inflater, container)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (header_layout != null) {
-            val titleId = getTitleStringId()
-            header_layout.title_textview.text = if (titleId == 0) "" else getString(titleId)
-            header_layout.close_button.setOnClickListener { onCloseButtonClick() }
-        }
-        if (footer_layout != null) {
-            footer_layout.reset_button.setOnClickListener { onResetButtonClick() }
-            footer_layout.confirm_button.setOnClickListener { onConfirmButtonClick() }
+        binding.apply {
+            val tempBinding = binding
+
+            if (tempBinding is ListHeaderBottomSheetBinding) {
+                val titleId = getTitleStringId()
+
+                tempBinding.headerLayout.titleTextview.text =
+                    if (titleId == 0) "" else getString(titleId)
+                tempBinding.headerLayout.closeButton.setOnClickListener { onCloseButtonClick() }
+            }
+
+            if (tempBinding is ListFooterHeaderBottomSheetBinding) {
+                val titleId = getTitleStringId()
+
+                tempBinding.headerLayout.titleTextview.text =
+                    if (titleId == 0) "" else getString(titleId)
+                tempBinding.headerLayout.closeButton.setOnClickListener { onCloseButtonClick() }
+
+                tempBinding.footerLayout.resetButton.setOnClickListener { onResetButtonClick() }
+                tempBinding.footerLayout.confirmButton.setOnClickListener { onConfirmButtonClick() }
+            }
+
+            if (tempBinding is InputBottomSheetBinding) {
+                val titleId = getTitleStringId()
+
+                tempBinding.headerLayout.titleTextview.text =
+                    if (titleId == 0) "" else getString(titleId)
+                tempBinding.headerLayout.closeButton.setOnClickListener { onCloseButtonClick() }
+
+                tempBinding.footerLayout.resetButton.setOnClickListener { onResetButtonClick() }
+                tempBinding.footerLayout.confirmButton.setOnClickListener { onConfirmButtonClick() }
+            }
         }
     }
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): BottomSheetDialog {
-        val bottomSheetDialog = BottomSheetDialog(requireContext(), theme)
-        bottomSheetDialog.setOnKeyListener { _, keyCode, _ ->
-            if (keyCode == android.view.KeyEvent.KEYCODE_BACK) {
-                dismiss()
-                true
-            } else {
-                false
+        return BottomSheetDialog(requireContext(), theme).apply {
+            setOnKeyListener { _, keyCode, _ ->
+                if (keyCode == android.view.KeyEvent.KEYCODE_BACK) {
+                    dismiss()
+                    true
+                } else {
+                    false
+                }
+            }
+            setOnShowListener { dialog ->
+                if (dialog is BottomSheetDialog) {
+                    val layout = dialog.findViewById<FrameLayout>(
+                        com.google.android.material.R.id.design_bottom_sheet
+                    )!!
+                    configureBottomSheetBehaviour(BottomSheetBehavior.from(layout))
+                }
             }
         }
-        bottomSheetDialog.setOnShowListener { dialog ->
-            if (dialog is BottomSheetDialog) {
-                val layout = dialog.findViewById<FrameLayout>(
-                    com.google.android.material.R.id.design_bottom_sheet
-                )!!
-                configureBottomSheetBehaviour(BottomSheetBehavior.from(layout))
-            }
-        }
-        return bottomSheetDialog
     }
 
     protected open fun configureBottomSheetBehaviour(behavior: BottomSheetBehavior<FrameLayout>) {
@@ -70,9 +97,13 @@ abstract class ExtendedBottomSheetDialog : BottomSheetDialogFragment() {
         }
     }
 
-    protected open fun getLayoutId(): Int = 0
+    protected abstract fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+
     protected open fun getTitleStringId(): Int = 0
+
     protected open fun onCloseButtonClick() {}
+
     protected open fun onResetButtonClick() {}
+
     protected open fun onConfirmButtonClick() {}
 }

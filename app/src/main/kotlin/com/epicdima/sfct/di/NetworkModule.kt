@@ -6,7 +6,7 @@ import com.epicdima.sfct.network.RetrofitApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -17,7 +17,7 @@ import javax.inject.Singleton
 /**
  * @author EpicDima
  */
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
 
@@ -29,7 +29,7 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(application: Application): OkHttpClient = OkHttpClient.Builder()
-        .cache(Cache(application.cacheDir, 10 * 1024 * 1024))
+        .cache(Cache(application.cacheDir, 10L * 1024 * 1024))
         .connectTimeout(5, TimeUnit.SECONDS)
         .readTimeout(8, TimeUnit.SECONDS)
         .build()

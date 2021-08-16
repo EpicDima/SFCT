@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -28,10 +27,9 @@ import dagger.hilt.android.AndroidEntryPoint
  * @author EpicDima
  */
 @AndroidEntryPoint
-class ExsearchFragment : Fragment(R.layout.exsearch_fragment), SharedViewModelFragment {
+class ExsearchFragment : Fragment(), SharedViewModelFragment {
 
     companion object {
-        const val TAG = "ExsearchFragment"
 
         fun newInstance() = ExsearchFragment()
     }
@@ -51,13 +49,13 @@ class ExsearchFragment : Fragment(R.layout.exsearch_fragment), SharedViewModelFr
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = ExsearchFragmentBinding.inflate(inflater)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         configureCommons()
         prepareExamsLayout()
         prepareParametersLayout()
@@ -66,42 +64,49 @@ class ExsearchFragment : Fragment(R.layout.exsearch_fragment), SharedViewModelFr
     }
 
     private fun configureCommons() {
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.status = viewModel.status
         requireAppCompatActivity().supportActionBar?.apply {
             setHomeAsUpIndicator(R.drawable.arrow_back_icon)
             title = getText(R.string.exsearch_title)
         }
         hideBackButton()
-        binding.refreshLayout.setColorSchemeResources(R.color.colorPrimary)
-        binding.refreshLayout.setOnRefreshListener { search(true) }
+
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            status = viewModel.status
+            refreshLayout.setColorSchemeResources(R.color.colorPrimary)
+            refreshLayout.setOnRefreshListener { search(true) }
+        }
     }
 
     private fun prepareExamsLayout() {
-        binding.exams = ParametersFragment.ParameterViewItem(getString(R.string.exam_title))
-        viewLifecycleOwner.observeParameter(requireContext(), viewModel.exams, binding.exams!!)
-        binding.examsLayout.root.setOnClickListener {
-            OuterExamsBottomSheetDialog.newInstance()
-                .show(childFragmentManager, OuterExamsBottomSheetDialog.TAG)
-        }
-        binding.examsLayout.resetButton.setOnClickListener {
-            if (!viewModel.rawStatus.loading) {
-                viewModel.resetExams()
-                showExamsSnackbar()
+        binding.apply {
+            exams = ParametersFragment.ParameterViewItem(getString(R.string.exam_title))
+            viewLifecycleOwner.observeParameter(requireContext(), viewModel.exams, binding.exams!!)
+            examsLayout.root.setOnClickListener {
+                OuterExamsBottomSheetDialog.newInstance().show(childFragmentManager, null)
+            }
+            examsLayout.resetButton.setOnClickListener {
+                if (!viewModel.rawStatus.loading) {
+                    viewModel.resetExams()
+                    showExamsSnackbar()
+                }
             }
         }
     }
 
     private fun prepareParametersLayout() {
-        binding.parametersSectionLayout.setOnClickListener {
-            Navigation.findNavController(it)
-                .navigate(R.id.action_exsearchFragment_to_parametersFragment)
-        }
-        binding.parametersResetButton.setOnClickListener {
-            if (!viewModel.rawStatus.loading) {
-                viewModel.resetParamsWithoutExams()
-                if (viewModel.isExamsDefault()) {
-                    showExamsSnackbar()
+        binding.apply {
+            parametersSectionLayout.setOnClickListener {
+                Navigation.findNavController(it)
+                    .navigate(R.id.action_exsearchFragment_to_parametersFragment)
+            }
+
+            parametersResetButton.setOnClickListener {
+                if (!viewModel.rawStatus.loading) {
+                    viewModel.resetParamsWithoutExams()
+                    if (viewModel.isExamsDefault()) {
+                        showExamsSnackbar()
+                    }
                 }
             }
         }
@@ -110,7 +115,7 @@ class ExsearchFragment : Fragment(R.layout.exsearch_fragment), SharedViewModelFr
     private fun prepareAdapter() {
         adapter = InstitutionsAdapter { index ->
             InstitutionSpecialtiesBottomSheet.newInstance(index)
-                .show(childFragmentManager, InstitutionSpecialtiesBottomSheet.TAG)
+                .show(childFragmentManager, null)
         }
         binding.recyclerView.setStandardProperties(requireContext(), adapter)
     }

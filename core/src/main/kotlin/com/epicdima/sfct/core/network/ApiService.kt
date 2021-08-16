@@ -4,6 +4,7 @@ package com.epicdima.sfct.core.network
  * @author EpicDima
  */
 interface ApiService {
+
     suspend fun postExsearch(
         exams: Array<String>,
         region: String,

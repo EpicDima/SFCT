@@ -3,24 +3,24 @@ package com.epicdima.sfct.exsearch.parameters
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.epicdima.sfct.R
 import com.epicdima.sfct.core.usecases.ExsearchParams
+import com.epicdima.sfct.databinding.ListFooterHeaderBottomSheetBinding
 import com.epicdima.sfct.exsearch.ParametersViewModel
 import com.epicdima.sfct.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.footer_of_bottom_sheet.*
-import kotlinx.android.synthetic.main.header_of_bottom_sheet.*
-import kotlinx.android.synthetic.main.list_footer_header_bottom_sheet.*
 
 /**
  * @author EpicDima
  */
 @AndroidEntryPoint
-open class ExamsBottomSheetDialog : ExtendedBottomSheetDialog() {
+open class ExamsBottomSheetDialog :
+    ExtendedBottomSheetDialog<ListFooterHeaderBottomSheetBinding>() {
+
     companion object {
-        const val TAG = "ExamsBottomSheetDialog"
 
         fun newInstance() = ExamsBottomSheetDialog()
     }
@@ -29,25 +29,26 @@ open class ExamsBottomSheetDialog : ExtendedBottomSheetDialog() {
 
     private lateinit var adapter: ExamsCheckedAdapter
 
-    override fun getLayoutId(): Int = R.layout.list_footer_header_bottom_sheet
+    override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
+        ListFooterHeaderBottomSheetBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        title_textview.text = getText(R.string.exam_title)
-        exams_list.setStandardProperties(requireContext(), createAdapter())
+        binding.headerLayout.titleTextview.text = getText(R.string.exam_title)
+        binding.examsList.setStandardProperties(requireContext(), createAdapter())
     }
 
     private fun createAdapter(): ExamsCheckedAdapter {
         adapter = ExamsCheckedAdapter(requireContext()) {
             if (adapter.map.values.any { it.selected.get() }) {
-                reset_button.show()
+                binding.footerLayout.resetButton.show()
             } else {
-                reset_button.hide()
+                binding.footerLayout.resetButton.hide()
             }
         }
-        viewModel.exams.currentValue.value!!.let {
+        viewModel.exams.currentValue.value!!.also {
             if (it.isNotEmpty()) {
-                reset_button.show()
+                binding.footerLayout.resetButton.show()
                 adapter.select(it)
             }
         }

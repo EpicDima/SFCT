@@ -13,6 +13,7 @@ import org.jsoup.nodes.TextNode
  * @author EpicDima
  */
 internal class SpecialtyParser : HtmlParser<Institution> {
+
     companion object {
         private val SCORE_KEY_REGEX = Regex("(score\\s\\^\\s)(\\d+)")
         private val SCORE_VALUE_REGEX = Regex("\\('(.+)'\\)")

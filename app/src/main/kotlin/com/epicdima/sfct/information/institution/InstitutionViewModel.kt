@@ -1,6 +1,5 @@
 package com.epicdima.sfct.information.institution
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -9,12 +8,15 @@ import com.epicdima.sfct.core.network.DataResult
 import com.epicdima.sfct.core.usecases.GetDormitoryByIdUseCase
 import com.epicdima.sfct.core.usecases.GetInstitutionByIdUseCase
 import com.epicdima.sfct.utils.DownloadableViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * @author EpicDima
  */
-class InstitutionViewModel @ViewModelInject constructor(
+@HiltViewModel
+class InstitutionViewModel @Inject constructor(
     private val getInstitutionByIdUseCase: GetInstitutionByIdUseCase,
     private val getDormitoryByIdUseCase: GetDormitoryByIdUseCase
 ) : DownloadableViewModel() {
