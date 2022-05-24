@@ -63,21 +63,21 @@ class PointsBottomSheetDialog : ExtendedBottomSheetDialog<InputBottomSheetBindin
     private fun keyboardChangeListener(): TextWatcher {
         return object : TextWatcher {
 
-            override fun afterTextChanged(p0: Editable?) {}
+            override fun afterTextChanged(s: Editable?) {}
 
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                p0?.also { text ->
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                s?.also { text ->
                     if (text.isNotEmpty()) {
                         binding.footerLayout.resetButton.show()
                         if (text.length > 1) {
                             if (text.all { '0' == it }) {
                                 binding.inputEdittext.setText("0")
-                                binding.inputEdittext.setSelection(p1)
+                                binding.inputEdittext.setSelection(start)
                             } else if (text[0] == '0') {
                                 binding.inputEdittext.setText(text.drop(1).toString())
-                                binding.inputEdittext.setSelection(p1)
+                                binding.inputEdittext.setSelection(start)
                             }
                         }
                         if (validateText(text.toString())) {

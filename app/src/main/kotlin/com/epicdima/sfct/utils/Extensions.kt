@@ -15,17 +15,15 @@ import java.util.*
  */
 fun <E : Enum<E>> Context.getEnumStrings(enumClass: Class<E>): EnumMap<E, String> {
     val clsName = enumClass.simpleName.lowercase(Locale.ROOT)
-    return EnumMap(enumClass.enumConstants!!.map {
-        Pair(
-            it, getString(
-                resources.getIdentifier(
-                    clsName + "_" + it.name.lowercase(Locale.ROOT),
-                    "string",
-                    packageName
-                )
+    return EnumMap(enumClass.enumConstants!!.associateWith {
+        getString(
+            resources.getIdentifier(
+                clsName + "_" + it.name.lowercase(Locale.ROOT),
+                "string",
+                packageName
             )
         )
-    }.toMap())
+    })
 }
 
 fun <E : Enum<E>> Context.getEnumString(enum: E): String {

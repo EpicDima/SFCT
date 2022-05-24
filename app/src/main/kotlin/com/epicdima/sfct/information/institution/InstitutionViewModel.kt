@@ -29,7 +29,7 @@ class InstitutionViewModel @Inject constructor(
     private val _dormitory = MutableLiveData<String?>()
     val dormitory: LiveData<String?> = _dormitory
 
-    private val _loadingDormitory = MutableLiveData<Boolean>(false)
+    private val _loadingDormitory = MutableLiveData(false)
     val loadingDormitory: LiveData<Boolean> = _loadingDormitory
 
     fun downloadInstitution(id: Int, forced: Boolean = false) = viewModelScope.launch {

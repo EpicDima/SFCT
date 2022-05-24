@@ -83,7 +83,7 @@ fun ParametersStorage.createRangeOfPointsParameter() =
     }
 
 fun ParametersStorage.createPointsParameter() = SingleParameterItem(points) { value, context ->
-    if (value.isEmpty()) context.getString(R.string.points_unspecified) else value
+    value.ifEmpty { context.getString(R.string.points_unspecified) }
 }
 
 fun ParametersStorage.createDormitoryParameter() =

@@ -11,7 +11,7 @@ class ImpovedDividerItemDecoration(
     private val divider: Drawable
 ) : RecyclerView.ItemDecoration() {
 
-    override fun onDrawOver(canvas: Canvas, parent: RecyclerView) {
+    override fun onDrawOver(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         val dividerLeft = parent.paddingLeft
         val dividerRight = parent.width - parent.paddingRight
 
