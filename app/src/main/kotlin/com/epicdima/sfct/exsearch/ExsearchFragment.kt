@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.epicdima.sfct.R
 import com.epicdima.sfct.core.model.Institution
-import com.epicdima.sfct.databinding.ExsearchFragmentBinding
+import com.epicdima.sfct.databinding.FragmentExsearchBinding
 import com.epicdima.sfct.databinding.ItemInstitutionBinding
 import com.epicdima.sfct.exsearch.parameters.observeParameter
 import com.epicdima.sfct.network.RetrofitApiService
@@ -34,7 +34,7 @@ class ExsearchFragment : Fragment(), SharedViewModelFragment {
         fun newInstance() = ExsearchFragment()
     }
 
-    private lateinit var binding: ExsearchFragmentBinding
+    private lateinit var binding: FragmentExsearchBinding
 
     private val viewModel: ExsearchViewModel by viewModels()
 
@@ -50,7 +50,7 @@ class ExsearchFragment : Fragment(), SharedViewModelFragment {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = ExsearchFragmentBinding.inflate(inflater)
+        binding = FragmentExsearchBinding.inflate(inflater)
         return binding.root
     }
 

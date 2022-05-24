@@ -6,7 +6,7 @@
 
     <include
         android:id="@+id/header_layout"
-        layout="@layout/header_of_bottom_sheet" />
+        layout="@layout/bottom_sheet_header" />
 
     <View
         android:layout_width="match_parent"
@@ -14,10 +14,19 @@
         android:background="@color/darkDivider" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/exams_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:overScrollMode="never" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/darkDivider" />
+
+    <include
+        android:id="@+id/footer_layout"
+        layout="@layout/bottom_sheet_footer" />
 
 </LinearLayout>

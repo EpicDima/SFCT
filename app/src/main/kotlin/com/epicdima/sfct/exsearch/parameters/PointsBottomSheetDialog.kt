@@ -14,7 +14,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.epicdima.sfct.R
-import com.epicdima.sfct.databinding.InputBottomSheetBinding
+import com.epicdima.sfct.databinding.BottomSheetInputBinding
 import com.epicdima.sfct.exsearch.ParametersViewModel
 import com.epicdima.sfct.utils.ExtendedBottomSheetDialog
 import com.epicdima.sfct.utils.hide
@@ -27,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * @author EpicDima
  */
 @AndroidEntryPoint
-class PointsBottomSheetDialog : ExtendedBottomSheetDialog<InputBottomSheetBinding>() {
+class PointsBottomSheetDialog : ExtendedBottomSheetDialog<BottomSheetInputBinding>() {
 
     companion object {
 
@@ -37,7 +37,7 @@ class PointsBottomSheetDialog : ExtendedBottomSheetDialog<InputBottomSheetBindin
     private val viewModel: ParametersViewModel by parentViewModel()
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        InputBottomSheetBinding.inflate(inflater, container, false)
+        BottomSheetInputBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

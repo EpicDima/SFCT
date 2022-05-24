@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.epicdima.sfct.R
 import com.epicdima.sfct.core.model.Institution
 import com.epicdima.sfct.core.model.Specialty
-import com.epicdima.sfct.databinding.InstitutionFragmentBinding
+import com.epicdima.sfct.databinding.FragmentInstitutionBinding
 import com.epicdima.sfct.databinding.ItemSpecialtyBinding
 import com.epicdima.sfct.network.RetrofitApiService
 import com.epicdima.sfct.utils.*
@@ -33,7 +33,7 @@ class InstitutionFragment : Fragment() {
         fun newInstance() = InstitutionFragment()
     }
 
-    private lateinit var binding: InstitutionFragmentBinding
+    private lateinit var binding: FragmentInstitutionBinding
 
     private val args: InstitutionFragmentArgs by navArgs()
 
@@ -50,7 +50,7 @@ class InstitutionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = InstitutionFragmentBinding.inflate(inflater)
+        binding = FragmentInstitutionBinding.inflate(inflater)
         return binding.root
     }
 

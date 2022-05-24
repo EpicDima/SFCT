@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/header_layout"
-        layout="@layout/header_of_bottom_sheet" />
+        layout="@layout/bottom_sheet_header" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -54,6 +54,6 @@
 
     <include
         android:id="@+id/footer_layout"
-        layout="@layout/footer_of_bottom_sheet" />
+        layout="@layout/bottom_sheet_footer" />
 
 </LinearLayout>

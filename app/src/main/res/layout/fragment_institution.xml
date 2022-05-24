@@ -29,7 +29,7 @@
         android:background="@color/background">
 
         <include
-            layout="@layout/status_layout"
+            layout="@layout/layout_status"
             app:status="@{status}" />
 
         <androidx.core.widget.NestedScrollView

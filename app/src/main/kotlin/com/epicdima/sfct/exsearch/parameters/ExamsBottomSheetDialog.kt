@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.epicdima.sfct.R
 import com.epicdima.sfct.core.usecases.ExsearchParams
-import com.epicdima.sfct.databinding.ListFooterHeaderBottomSheetBinding
+import com.epicdima.sfct.databinding.BottomSheetListFooterHeaderBinding
 import com.epicdima.sfct.exsearch.ParametersViewModel
 import com.epicdima.sfct.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 open class ExamsBottomSheetDialog :
-    ExtendedBottomSheetDialog<ListFooterHeaderBottomSheetBinding>() {
+    ExtendedBottomSheetDialog<BottomSheetListFooterHeaderBinding>() {
 
     companion object {
 
@@ -30,7 +30,7 @@ open class ExamsBottomSheetDialog :
     private lateinit var adapter: ExamsCheckedAdapter
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        ListFooterHeaderBottomSheetBinding.inflate(inflater, container, false)
+        BottomSheetListFooterHeaderBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

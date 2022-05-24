@@ -9,8 +9,8 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.epicdima.sfct.R
 import com.epicdima.sfct.core.model.Specialty
+import com.epicdima.sfct.databinding.BottomSheetListHeaderBinding
 import com.epicdima.sfct.databinding.ItemSpecialtyBottomSheetBinding
-import com.epicdima.sfct.databinding.ListHeaderBottomSheetBinding
 import com.epicdima.sfct.utils.ExtendedBottomSheetDialog
 import com.epicdima.sfct.utils.parentViewModel
 import com.epicdima.sfct.utils.setStandardProperties
@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class InstitutionSpecialtiesBottomSheet :
-    ExtendedBottomSheetDialog<ListHeaderBottomSheetBinding>() {
+    ExtendedBottomSheetDialog<BottomSheetListHeaderBinding>() {
 
     companion object {
 
@@ -35,7 +35,7 @@ class InstitutionSpecialtiesBottomSheet :
     private var index = -1
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        ListHeaderBottomSheetBinding.inflate(inflater, container, false)
+        BottomSheetListHeaderBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

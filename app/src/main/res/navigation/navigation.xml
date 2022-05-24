@@ -9,7 +9,7 @@
         android:id="@+id/exsearchFragment"
         android:name="com.epicdima.sfct.exsearch.ExsearchFragment"
         android:label="exsearch_fragment"
-        tools:layout="@layout/exsearch_fragment">
+        tools:layout="@layout/fragment_exsearch">
         <action
             android:id="@+id/action_exsearchFragment_to_specialtyFragment"
             app:destination="@id/specialtyFragment"
@@ -29,7 +29,7 @@
         android:id="@+id/specialtyFragment"
         android:name="com.epicdima.sfct.information.specialty.SpecialtyFragment"
         android:label="specialty_fragment"
-        tools:layout="@layout/specialty_fragment">
+        tools:layout="@layout/fragment_specialty">
         <action
             android:id="@+id/action_specialtyFragment_to_institutionFragment"
             app:destination="@id/institutionFragment"
@@ -50,7 +50,7 @@
         android:id="@+id/institutionFragment"
         android:name="com.epicdima.sfct.information.institution.InstitutionFragment"
         android:label="institution_fragment"
-        tools:layout="@layout/institution_fragment">
+        tools:layout="@layout/fragment_institution">
         <argument
             android:name="institutionId"
             android:defaultValue="0"

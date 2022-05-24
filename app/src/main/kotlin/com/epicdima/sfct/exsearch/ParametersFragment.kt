@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.navigation.Navigation
 import com.epicdima.sfct.R
-import com.epicdima.sfct.databinding.ParametersFragmentBinding
+import com.epicdima.sfct.databinding.FragmentParametersBinding
 import com.epicdima.sfct.databinding.ParametersSectionBinding
 import com.epicdima.sfct.exsearch.parameters.*
 import com.epicdima.sfct.utils.*
@@ -30,7 +30,7 @@ class ParametersFragment : Fragment(), SharedViewModelFragment {
 
     private val viewModel: ParametersViewModel by viewModels()
 
-    private lateinit var binding: ParametersFragmentBinding
+    private lateinit var binding: FragmentParametersBinding
 
     private var resetMenuItem: MenuItem? = null
 
@@ -43,7 +43,7 @@ class ParametersFragment : Fragment(), SharedViewModelFragment {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = ParametersFragmentBinding.inflate(inflater)
+        binding = FragmentParametersBinding.inflate(inflater)
         return binding.root
     }
 

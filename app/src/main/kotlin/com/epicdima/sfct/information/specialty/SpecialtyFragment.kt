@@ -16,8 +16,8 @@ import com.epicdima.sfct.R
 import com.epicdima.sfct.core.model.Institution
 import com.epicdima.sfct.core.model.PassingScore
 import com.epicdima.sfct.core.model.Specialty
+import com.epicdima.sfct.databinding.FragmentSpecialtyBinding
 import com.epicdima.sfct.databinding.ItemScoreBinding
-import com.epicdima.sfct.databinding.SpecialtyFragmentBinding
 import com.epicdima.sfct.network.RetrofitApiService
 import com.epicdima.sfct.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +33,7 @@ class SpecialtyFragment : Fragment() {
         fun newInstance() = SpecialtyFragment()
     }
 
-    private lateinit var binding: SpecialtyFragmentBinding
+    private lateinit var binding: FragmentSpecialtyBinding
 
     private val args: SpecialtyFragmentArgs by navArgs()
 
@@ -50,7 +50,7 @@ class SpecialtyFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = SpecialtyFragmentBinding.inflate(inflater)
+        binding = FragmentSpecialtyBinding.inflate(inflater)
         return binding.root
     }
 

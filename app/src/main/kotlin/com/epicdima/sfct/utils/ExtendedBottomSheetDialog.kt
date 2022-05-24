@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.viewbinding.ViewBinding
 import com.epicdima.sfct.R
-import com.epicdima.sfct.databinding.InputBottomSheetBinding
-import com.epicdima.sfct.databinding.ListFooterHeaderBottomSheetBinding
-import com.epicdima.sfct.databinding.ListHeaderBottomSheetBinding
+import com.epicdima.sfct.databinding.BottomSheetInputBinding
+import com.epicdima.sfct.databinding.BottomSheetListFooterHeaderBinding
+import com.epicdima.sfct.databinding.BottomSheetListHeaderBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -35,7 +35,7 @@ abstract class ExtendedBottomSheetDialog<VB : ViewBinding> : BottomSheetDialogFr
         binding.apply {
             val tempBinding = binding
 
-            if (tempBinding is ListHeaderBottomSheetBinding) {
+            if (tempBinding is BottomSheetListHeaderBinding) {
                 val titleId = getTitleStringId()
 
                 tempBinding.headerLayout.titleTextview.text =
@@ -43,7 +43,7 @@ abstract class ExtendedBottomSheetDialog<VB : ViewBinding> : BottomSheetDialogFr
                 tempBinding.headerLayout.closeButton.setOnClickListener { onCloseButtonClick() }
             }
 
-            if (tempBinding is ListFooterHeaderBottomSheetBinding) {
+            if (tempBinding is BottomSheetListFooterHeaderBinding) {
                 val titleId = getTitleStringId()
 
                 tempBinding.headerLayout.titleTextview.text =
@@ -54,7 +54,7 @@ abstract class ExtendedBottomSheetDialog<VB : ViewBinding> : BottomSheetDialogFr
                 tempBinding.footerLayout.confirmButton.setOnClickListener { onConfirmButtonClick() }
             }
 
-            if (tempBinding is InputBottomSheetBinding) {
+            if (tempBinding is BottomSheetInputBinding) {
                 val titleId = getTitleStringId()
 
                 tempBinding.headerLayout.titleTextview.text =

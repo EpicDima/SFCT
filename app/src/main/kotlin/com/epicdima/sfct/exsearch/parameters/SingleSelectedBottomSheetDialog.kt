@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.epicdima.sfct.R
 import com.epicdima.sfct.core.usecases.ExsearchParams
-import com.epicdima.sfct.databinding.ListHeaderBottomSheetBinding
+import com.epicdima.sfct.databinding.BottomSheetListHeaderBinding
 import com.epicdima.sfct.exsearch.ParametersViewModel
 import com.epicdima.sfct.utils.EnumRadioAdapter
 import com.epicdima.sfct.utils.ExtendedBottomSheetDialog
@@ -19,14 +19,14 @@ import dagger.hilt.android.AndroidEntryPoint
  * @author EpicDima
  */
 abstract class SingleSelectedBottomSheetDialog<E : Enum<E>> :
-    ExtendedBottomSheetDialog<ListHeaderBottomSheetBinding>() {
+    ExtendedBottomSheetDialog<BottomSheetListHeaderBinding>() {
 
     protected val viewModel: ParametersViewModel by parentViewModel()
 
     protected lateinit var adapter: SingleSelectedAdapter
 
     override fun createViewBinding(inflater: LayoutInflater, container: ViewGroup?) =
-        ListHeaderBottomSheetBinding.inflate(inflater, container, false)
+        BottomSheetListHeaderBinding.inflate(inflater, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
