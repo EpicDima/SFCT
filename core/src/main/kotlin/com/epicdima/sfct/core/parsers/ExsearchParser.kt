@@ -11,14 +11,14 @@ import org.jsoup.nodes.Element
 internal class ExsearchParser : HtmlParser<List<Institution>> {
 
     override fun parse(html: String) = Jsoup.parse(html)
-        ?.selectFirst("div.catalog")
+        .selectFirst("div.catalog")
         ?.select("div.catalog_item")
         ?.map(::parseInstitution)
         ?.filter { it.name.isNotEmpty() }
         ?: emptyList()
 
     private fun parseInstitution(element: Element) = Institution(
-        name = element.selectFirst("h3").text(),
+        name = element.selectFirst("h3")?.text() ?: "",
         specialties = element.select("table.search_result > tbody > tr")
             .filterIndexed { index, item -> (index % 2 == 1) && (item.childrenSize() == 3) }
             .map(::parseSpecialty)

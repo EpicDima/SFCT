@@ -66,6 +66,7 @@
             android:id="@+id/deepLink"
             app:uri="www.kudapostupat.by/zavedenie/id/{institutionId}" />
     </fragment>
+
     <fragment
         android:id="@+id/parametersFragment"
         android:name="com.epicdima.sfct.exsearch.ParametersFragment"

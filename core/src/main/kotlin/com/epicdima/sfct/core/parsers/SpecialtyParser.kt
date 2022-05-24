@@ -21,37 +21,37 @@ internal class SpecialtyParser : HtmlParser<Institution> {
 
     override fun parse(html: String): Institution {
         val content = Jsoup.parse(html).selectFirst("div.content_wrap > .content")
-        val heading = content.selectFirst(".heading") ?: return Institution()
-        val institutionElement = heading.selectFirst(".breadcrumps").child(3)
+        val heading = content?.selectFirst(".heading") ?: return Institution()
+        val institutionElement = heading.selectFirst(".breadcrumps")?.child(3)
         val contextText = content.selectFirst("div.content_text")
         val pairs = createPairs(contextText)
         println()
         return Institution(
-            id = institutionElement.attr("href").substring(14).toInt(),
-            name = institutionElement.text(),
+            id = institutionElement?.attr("href")?.substring(14)?.toInt() ?: 0,
+            name = institutionElement?.text() ?: "",
             address = pairs["Адрес"] ?: "",
             phone = pairs["Телефон"] ?: "",
             specialties = listOf(createSpecialty(content, contextText, pairs))
         )
     }
 
-    private fun createPairs(contextText: Element) = contextText
-        .select("p")
-        .filter { it.className().isEmpty() && it.childNodeSize() == 2 }
-        .map {
+    private fun createPairs(contextText: Element?): Map<String, String> = contextText
+        ?.select("p")
+        ?.toList()
+        ?.filter { it.className().isEmpty() && it.childNodeSize() == 2 }
+        ?.associate {
             Pair(
                 it.child(0).text().trim().dropLast(1),
                 (it.childNode(1) as TextNode).text().trim()
             )
-        }
-        .toMap()
+        } ?: emptyMap()
 
     private fun createSpecialty(
         content: Element,
-        contextText: Element,
+        contextText: Element?,
         pairs: Map<String, String>
     ): Specialty {
-        val table = contextText.selectFirst("table.exams > tbody")
+        val table = contextText?.selectFirst("table.exams > tbody")
         return Specialty(
             faculty = pairs["Факультет"] ?: "",
             name = pairs["Специальность"] ?: "",
@@ -67,18 +67,19 @@ internal class SpecialtyParser : HtmlParser<Institution> {
         )
     }
 
-    private fun getExams(table: Element) = table
-        .child(0)
-        .child(1)
-        .text()
-        .trim()
+    private fun getExams(table: Element?): String = table
+        ?.child(0)
+        ?.child(1)
+        ?.text()
+        ?.trim() ?: ""
 
-    private fun getProfileExams(table: Element): Pair<String, String> {
+    private fun getProfileExams(table: Element?): Pair<String, String> {
         val list = table
-            .selectFirst("td.prof-exams")
-            .text().split(";")
-            .filter(String::isNotBlank)
-            .map { line -> line.takeLastWhile { it != '-' }.trim() }
+            ?.selectFirst("td.prof-exams")
+            ?.text()
+            ?.split(";")
+            ?.filter(String::isNotBlank)
+            ?.map { line -> line.takeLastWhile { it != '-' }.trim() } ?: emptyList()
         return if (list.size == 2) {
             Pair(list[0], list[1])
         } else {
@@ -90,9 +91,10 @@ internal class SpecialtyParser : HtmlParser<Institution> {
         val key = content.html().getGroupInt(SCORE_KEY_REGEX, 2)
         return content
             .select("div.accordion")
+            .toList()
             .filter { it.selectFirst("h3") != null }
             .map { accordion ->
-                val year = accordion.selectFirst("h3").text().drop(16).dropLast(1).toInt()
+                val year = accordion.selectFirst("h3")?.text()?.drop(16)?.dropLast(1)?.toInt() ?: 0
                 val trs = accordion.select("div > table > tbody > tr")
                 PassingScore(
                     year,

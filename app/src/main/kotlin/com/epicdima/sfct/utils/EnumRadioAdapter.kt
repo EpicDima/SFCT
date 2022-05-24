@@ -20,8 +20,7 @@ abstract class EnumRadioAdapter<E : Enum<E>, VH : EnumRadioAdapter.EnumViewHolde
     private val values: Array<E> = enumClass.enumConstants!!
     private val map: Map<E, EnumDataHolder<E>> = createMap(context)
 
-    @OptIn(ExperimentalStdlibApi::class)
-    protected fun createMap(context: Context): Map<E, EnumDataHolder<E>> {
+    private fun createMap(context: Context): Map<E, EnumDataHolder<E>> {
         val enumMap: EnumMap<E, String> = context.getEnumStrings(enumClass)
         return buildMap {
             this@EnumRadioAdapter.values.forEach {

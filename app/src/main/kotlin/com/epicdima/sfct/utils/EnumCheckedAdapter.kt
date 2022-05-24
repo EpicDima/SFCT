@@ -26,8 +26,7 @@ abstract class EnumCheckedAdapter<E : Enum<E>, VH : EnumCheckedAdapter.EnumViewH
     private val values: Array<E> = enumClass.enumConstants!!
     val map: Map<E, EnumDataHolder<E>> = createMap(context)
 
-    @OptIn(ExperimentalStdlibApi::class)
-    protected fun createMap(context: Context): Map<E, EnumDataHolder<E>> {
+    private fun createMap(context: Context): Map<E, EnumDataHolder<E>> {
         val enumMap = context.getEnumStrings(enumClass)
         return buildMap {
             this@EnumCheckedAdapter.values.forEach {
